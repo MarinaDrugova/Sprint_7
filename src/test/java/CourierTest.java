@@ -6,9 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import io.restassured.response.ValidatableResponse;
-
-import java.util.Random;
-
 import static junit.framework.TestCase.assertEquals;
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertTrue;
@@ -41,7 +38,7 @@ public class CourierTest {
     }
     @Test
     public void courierCanBeCreated() {
-        ValidatableResponse response = courierClient.create(courier);
+        ValidatableResponse response = courierClient.createCourier(courier);
         ValidatableResponse loginResponse = courierClient.login(courierAuthorization);
         id = loginResponse.extract().path("id").toString();
         response.statusCode(SC_CREATED);
@@ -51,14 +48,14 @@ public class CourierTest {
 
     @Test
     public void identicCouriersCanNotBeCreated() {
-        courierClient.create(courier);
-        ValidatableResponse response = courierClient.create(courier);
+        courierClient.createCourier(courier);
+        ValidatableResponse response = courierClient.createCourier(courier);
         response.assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"))
                 .and().statusCode(SC_BAD_REQUEST);
     }
     @Test
     public void сourierWithoutPasswordCanNotBeCreated(){
-        ValidatableResponse response = courierClient.create(courierWithoutPassword);
+        ValidatableResponse response = courierClient.createCourier(courierWithoutPassword);
         int statusCode = response.extract().statusCode();
         assertEquals(SC_BAD_REQUEST, statusCode);
         String messageResponse = response.extract().path("message");
@@ -67,7 +64,7 @@ public class CourierTest {
     }
     @Test
     public void сourierWithoutLoginCanNotBeCreated(){
-        ValidatableResponse response = courierClient.create(courierWithoutLogin);
+        ValidatableResponse response = courierClient.createCourier(courierWithoutLogin);
         int statusCode = response.extract().statusCode();
         assertEquals(SC_BAD_REQUEST, statusCode);
         String messageResponse = response.extract().path("message");

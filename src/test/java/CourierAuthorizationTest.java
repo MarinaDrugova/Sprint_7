@@ -31,8 +31,8 @@ public class CourierAuthorizationTest {
     }
         @Test
         @DisplayName("Авторизация курьера")
-        public void CourierAuthorization() {
-            courierClient.create(courier);
+        public void courierAuthorization() {
+            courierClient.createCourier(courier);
             ValidatableResponse loginResponse = courierClient.login(courierAuthorization);
             id = loginResponse.extract().path("id");
             int statusCode = loginResponse.extract().statusCode();
@@ -42,7 +42,7 @@ public class CourierAuthorizationTest {
 
         @Test
         @DisplayName("Авторизация курьера без логина")
-        public void CourierWithoutLogin() {
+        public void courierWithoutLogin() {
             courier.setLogin("");
             ValidatableResponse response = courierClient.login(courierAuthorization.from(courier));
             response.assertThat().body("message", equalTo("Недостаточно данных для входа"))
@@ -51,7 +51,7 @@ public class CourierAuthorizationTest {
 
         @Test
         @DisplayName("Авторизация курьера без пароля")
-        public void CourierWithoutPasswordTest() {
+        public void courierWithoutPasswordTest() {
             courier.setPassword("");
             ValidatableResponse response = courierClient.login(courierAuthorization.from(courier));
             response.assertThat().body("message", equalTo("Недостаточно данных для входа"))
@@ -60,7 +60,7 @@ public class CourierAuthorizationTest {
 
         @Test
         @DisplayName("Авторизация курьера с несуществующим логином")
-        public void CourierInvalidLogin() {
+        public void courierInvalidLogin() {
             courier.setLogin(" ");
             ValidatableResponse response = courierClient.login(courierAuthorization.from(courier));
             response.assertThat().body("message", equalTo("Учетная запись не найдена"))

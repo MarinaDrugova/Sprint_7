@@ -21,4 +21,5 @@ public class OrderScooterClient extends Client {
                 .then();
 
     }
+
 }

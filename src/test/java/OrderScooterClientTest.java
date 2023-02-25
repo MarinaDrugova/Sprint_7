@@ -32,7 +32,7 @@ public class OrderScooterClientTest {
 
     }
     @Test
-    public void OrderScooterTest() {
+    public void orderScooterTest() {
         String name = "name";
         String surname = "surname";
         String address = "address";
